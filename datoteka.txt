@@ -1,6 +1,8 @@
-Voce:
+Voce i povrce:
 
 kruska
 jabuka
+mrkva
+paprika
 sljiva
 naranca
