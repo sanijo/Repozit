@@ -3,3 +3,4 @@ Voce:
 kruska
 jabuka
 sljiva
+naranca
