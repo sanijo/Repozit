@@ -5,7 +5,8 @@ x=[];
 lines = txt_f.readlines()
 for line in lines:
 	i += 1
-	if i % 20 == 0:
+#every i-th line to save
+	if i % 100 == 0: 
 		x.append(lines[i])    
 txt_f.close()
 
