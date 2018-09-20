@@ -5,10 +5,10 @@ x=[];
 lines = txt_f.readlines()
 for line in lines:
 	i += 1
-#every i-th line to save
+#every i % n==0 line to save
 	if i % 100 == 0: 
 		x.append(lines[i])    
-txt_f.close()
+#txt_f.close()
 
 #save data to .txt file
 f = open("heatGeneration.txt", "w+")

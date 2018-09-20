@@ -3,7 +3,7 @@ class User():
 	
 	def __init__(self, name, surname, age='unknown'):
 		"""Initialize atributes."""
-		self. name = name
+		self.name = name
 		self.surname = surname
 		self.age = age
 		self.height = 'unknown'
@@ -22,6 +22,7 @@ class User():
 		diff = 0
 		diff = age - self.age
 		self.age += diff
+
 
 class Sby():
 	"""Sallary by years"""
@@ -55,6 +56,7 @@ class Sby():
 			average = sum / i
 			print("\nYear: " + str(k) + " Sallary: " + str(v))
 			print("Average sallary: " + str(average))
+
 		
 class advancedUser(User):
 	"""Child class of class User"""	
