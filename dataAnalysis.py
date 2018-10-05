@@ -13,7 +13,7 @@ log_file_list=['HeatFlow']
 
 def data_analysis(log):
     
-    log_file=log+".csv"
+    log_file=log + ".csv"
     
     print("Analysing " + log_file + "\n")
     
