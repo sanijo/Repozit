@@ -9,17 +9,17 @@ from scipy.interpolate import RectBivariateSpline
 
 start_time = time.clock()
 
-#log_file_list=['C2_0_100_0_10x_wo_reg_raw',
-#               'C2_0_200_0_6x_wo_reg_raw',
-#               'C2_0_330_hold_raw',
-#               'C2_0_412_normal_gear_raw',
-#               'C2_Grobnik_100_0_SoC_wo_reg_raw',
-#               'C2_Nardo_Handling_100_0_SoC_wo_reg_raw',
-#               'C2_Nardo_Oval_1_raw',
-#               'C2_Nardo_Oval_2_wo_reg_raw',
-#               'C2_Nurburgring_100_0_SoC_wo_reg_raw']
+log_file_list=['C2_0_100_0_10x_wo_reg_raw',
+               'C2_0_200_0_6x_wo_reg_raw',
+               'C2_0_330_hold_raw',
+               'C2_0_412_normal_gear_raw',
+               'C2_Grobnik_100_0_SoC_wo_reg_raw',
+               'C2_Nardo_Handling_100_0_SoC_wo_reg_raw',
+               'C2_Nardo_Oval_1_raw',
+               'C2_Nardo_Oval_2_wo_reg_raw',
+               'C2_Nurburgring_100_0_SoC_wo_reg_raw']
 
-log_file_list=['C2_0_100_0_10x_wo_reg_raw']
+#log_file_list=['C2_0_100_0_10x_wo_reg_raw']
 
 # Load losses data
 lossData = np.loadtxt('motorLosses.csv', delimiter=';')
@@ -36,7 +36,7 @@ motorLoss = RectBivariateSpline(speeds, torques, losses)
 # Call this function like this: Q = motorLoss(speed, torque, grid=False)
 #inverterLoss = lambda w,t: 100 + 24.1463*np.absolute(w)
 #NOVO
-inverterLoss = lambda w: 100 + 24.1463*np.absolute(w)
+inverterLoss = lambda t: 100 + 24.1463*np.absolute(t)
 
 
 def data_analysis(log):
@@ -44,6 +44,7 @@ def data_analysis(log):
     log_file=log + ".csv"
     
     print("\nAnalysing " + log_file + "\n")
+    start_time_for_file = time.clock()
     
     # df = pd.read_csv(log_file, sep=',')
     # Your log file is dirty. Load it so that it is clean
@@ -57,8 +58,8 @@ def data_analysis(log):
     #NOVO
     df['MotorHeatRL'] = motorLoss(df['PT.Motor2.rotv'], df['PT.Motor2.Trq'], grid=False)
     df['MotorHeatRR'] = motorLoss(df['PT.Motor3.rotv'], df['PT.Motor3.Trq'], grid=False)    
-    df['InverterHeatRL'] = inverterLoss(df['PT.Motor2.rotv'])
-    df['InverterHeatRR'] = inverterLoss(df['PT.Motor3.rotv'])
+    df['InverterHeatRL'] = inverterLoss(df['PT.Motor2.Trq'])
+    df['InverterHeatRR'] = inverterLoss(df['PT.Motor3.Trq'])
    
         
     columnsToSave = ['Time','MotorHeatRL', 'MotorHeatRR', 'InverterHeatRL', 'InverterHeatRR']
@@ -77,7 +78,7 @@ def data_analysis(log):
     #print(motorPwr[300:400])
     motorHeat=df['MotorHeatRL']
     
-#    fig, ax = plt.subplots()
+    fig, ax = plt.subplots()
     motorPwr.plot(x='Time', y=['PT.Motor2.PwrElec'])
     plt.xlabel("Time [s]")
     plt.ylabel("Power [kW]")
@@ -117,17 +118,16 @@ def data_analysis(log):
 #   plt.axis([0, 200, 0, 10])
     plt.show()
     
-
-    print("\n--- %s seconds spent for analysing %s ---" % (time.clock() - start_time, log_file))
-    
     #df.plot(x='Time', y=['PT.Motor2.PwrElec','MotorHeatRL','InverterHeatRL','PT.Motor2.Trq'])
     df.plot(x='Time', y=['PT.Motor2.PwrElec','MotorHeatRL'])
     plt.xlabel("Time [s]")
     plt.ylabel("Power [kW]")
     plt.show()
     
+    print("\n--- %s seconds spent for analysing %s ---" % (time.clock()-start_time_for_file, log_file))
+    
 for log in log_file_list:
     data_analysis(log)
 
 
-print("--- %s seconds ---" % (time.clock() - start_time)) 
+print("\n--- %s seconds spent overall ---" % (time.clock() - start_time)) 
