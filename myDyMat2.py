@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Oct 17 10:35:33 2018
+Created on Thu Oct 18 09:38:11 2018
 
 @author: sanijo.durasevic
 """
 
-import sys
 import DyMat as dm
 from matplotlib import pyplot as plt
 import numpy as np
@@ -20,8 +19,7 @@ def dy_mat_func(file):
     #    print(n)
     
     f = dm.DyMatFile(file + ".mat")
-    
-    #Stores values from .mat file to numpy array
+
     time = f.abscissa('HC_B9.T', valuesOnly=True)
     B9_T = f.data('HC_B9.T')-273.15
     A7_T = f.data('HC_A7.T')-273.15
@@ -53,65 +51,7 @@ def dy_mat_func(file):
     list9 = v.tolist()
     list10 = Q.tolist()
     
-    #Dataframes for plotting
-    data1 = pd.DataFrame({'time': list1, 'T$_{B9}$': list2, 'T$_{A7}$': list3,
-                          'T$_{A2}$': list4, 'T$_{A11}$': list5, 'T$_{B3}$': list6})
-
-    data2 = pd.DataFrame({'time': list1, 'T$_{fluid\; inlet}$': list7, 'T$_{fluid\; outlet}$': list8})
-    
-    data3 = pd.DataFrame({'time': list1, 'Velocity [km/h]': list9})
-    
-    data4 = pd.DataFrame({'time': list1, 'Q [kW]': list10})
-
-    #fig, ax = plt.subplots()
-    
-    data1.plot(x='time')
-    plt.xlabel("Time [s]")
-    plt.ylabel("Temperature $[^{\circ}C]$")
-    #plt.xlim((0,694))
-    #plt.ylim((25,120))
-    plt.autoscale(tight=True)
-    plt.grid(True)
-    plt.title(file)
-    plt.savefig(file + "_Module_T.png")
-    plt.show()
-    
-    data2.plot(x='time')
-    plt.xlabel("Time [s]")
-    plt.ylabel("Temperature $[^{\circ}C]$")
-    plt.autoscale(tight=True)
-    #plt.xlim((0,694))
-    #plt.ylim((20,100))
-    plt.grid(True)
-    plt.title(file)
-    plt.savefig(file + "_HE_T.png")
-    plt.show()
-    
-    data3.plot(x='time')
-    plt.xlabel("Time [s]")
-    plt.ylabel("Velocity [km/h]")
-    plt.autoscale(tight=True)
-    #plt.xlim((0,694))
-    #plt.ylim((0,100))
-    plt.grid(True)
-    plt.title(file)
-    plt.legend().remove()
-    plt.savefig(file + "_velocity.png")
-    plt.show()
-    
-    data4.plot(x='time')
-    plt.xlabel("Time [s]")
-    plt.ylabel("Q [kW]")
-    #plt.xlim((0,694))
-    #plt.ylim((0,25))
-    plt.autoscale(tight=True)
-    plt.grid(True)
-    plt.title(file)
-    plt.legend().remove()
-    plt.savefig(file + "_Q.png")
-    plt.show()
-    
-    #All plots
+    #Plots
     f, axarr = plt.subplots(2, 2, figsize=(14, 10))
     
     axarr[0, 0].plot(list1, list2, label='T$_{B9}$')
@@ -147,12 +87,13 @@ def dy_mat_func(file):
     axarr[1, 1].set_ylabel("Q [kW]", fontsize=10)
     axarr[1, 1].autoscale(tight=True)
     axarr[1, 1].grid(True)
-    #axarr[1, 1].set_title(file)
+   # axarr[1, 1].set_title(file)
     
     plt.subplots_adjust(wspace=0.25, hspace=0.25)
     plt.suptitle(file)
     plt.savefig(file + "_COMPLETE.pdf", format='pdf')
     plt.show()
+    
 
 for file in files_list:
     dy_mat_func(file)
