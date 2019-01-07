@@ -12,8 +12,13 @@ import DyMat as dm
 from matplotlib import pyplot as plt
 import numpy as np
 import pandas as pd
+from datetime import date
 
-dir_save = r'C:\Users\sanjio.durasevic\Desktop\TSP\mat_files_new'
+today = str(date.today().isoformat())
+
+dir_save = 'C:/Users/sanjio.durasevic/Desktop/TSP/'+today+'_results' 
+print(dir_save)
+os.makedirs(dir_save, exist_ok=True)
 
 dir_modelon = r'C:\Program Files\Dymola 2018 FD01\Modelica\Library\Modelon 3.2\package.moe'
 dir_lcl = r'C:\Program Files\Dymola 2018 FD01\Modelica\Library\LiquidCooling 2.1\package.moe'
@@ -34,6 +39,7 @@ models1 = ['Inverter_dc1', 'Inverter_dc2', 'Inverter_dc3', 'Inverter_dc4']
 paths2 = [path_model5, path_model6, path_model7, path_model8]
 
 models2 = ['Motor_FINAL_dc1', 'Motor_FINAL_dc2', 'Motor_FINAL_dc3', 'Motor_FINAL_dc4']
+
 
 times = [775, 790 ,160, 105]
 
