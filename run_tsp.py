@@ -17,7 +17,6 @@ from datetime import date
 today = str(date.today().isoformat())
 
 dir_save = 'C:/Users/sanjio.durasevic/Desktop/TSP/'+today+'_results' 
-print(dir_save)
 os.makedirs(dir_save, exist_ok=True)
 
 dir_modelon = r'C:\Program Files\Dymola 2018 FD01\Modelica\Library\Modelon 3.2\package.moe'
