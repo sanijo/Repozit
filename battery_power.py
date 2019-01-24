@@ -7,11 +7,12 @@ Created on Fri Oct 12 09:50:09 2018
 
 import platform
 import matplotlib
-matplotlib.use('Qt5Agg')
+#matplotlib.use('Qt5Agg')
 import pandas as pd
 import numpy as np
 from matplotlib import pyplot as plt
 import time
+from datetime import date
 from scipy.interpolate import RectBivariateSpline
 import os
 import sys
